@@ -3,7 +3,7 @@
   <Name>Connectome</Name>
   <Maintainer>svantetobias</Maintainer>
   <Repository>ghcr.io/svantetobias/connectome:latest</Repository>
-  <Registry>https://github.com/svantetobias/connectome-docker/pkgs/container/connectome</Registry>
+  <Registry>https://github.com/users/svantetobias/packages/container/package/connectome</Registry>
   <Network>bridge</Network>
   <MyIP/>
   <Shell>bash</Shell>
