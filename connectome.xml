@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<Container version="2">
+  <Name>Connectome</Name>
+  <Maintainer>svantetobias</Maintainer>
+  <Repository>ghcr.io/svantetobias/connectome:latest</Repository>
+  <Registry>https://github.com/svantetobias/connectome-docker/pkgs/container/connectome</Registry>
+  <Network>bridge</Network>
+  <MyIP/>
+  <Shell>bash</Shell>
+  <Privileged>false</Privileged>
+  <!-- TODO: replace Support with an unRAID forum support thread -->
+  <Support>https://github.com/svantetobias/connectome-docker/issues</Support>
+  <Project>https://github.com/anima-research/connectome-host</Project>
+  <Overview>Connectome host by Anima Labs (unofficial community container; upstream has no license and is not affiliated): it runs a persistent, stateful AI agent from a JSON recipe, with long-term memory (Chronicle), MCP/MCPL tools and a web operator console. The container runs headless with the web UI on port 7340, protected by basic auth. It drops root and runs as PUID/PGID (default 99:100, unRAID's nobody:users), and fixes ownership of the appdata folders if they're wrong. On first start a default Anthropic-backed recipe is written to /config/recipe.json. Edit or replace it to change the agent. You need an LLM provider key (Anthropic by default, or OpenAI/OpenRouter/Bedrock if the recipe uses them).</Overview>
+  <Category>Tools: Productivity:</Category>
+  <WebUI>http://[IP]:[PORT:7340]/</WebUI>
+  <TemplateURL>https://raw.githubusercontent.com/svantetobias/unraid-templates/main/connectome.xml</TemplateURL>
+  <Icon>https://raw.githubusercontent.com/svantetobias/unraid-templates/main/images/connectome.png</Icon>
+  <ExtraParams/>
+  <PostArgs/>
+  <CPUset/>
+  <DonateText/>
+  <DonateLink/>
+  <Requires>An LLM provider API key (ANTHROPIC_API_KEY for the default recipe).</Requires>
+  <Config Name="Web UI Port" Target="7340" Default="7340" Mode="tcp" Description="Web operator console and /healthz" Type="Port" Display="always" Required="true" Mask="false">7340</Config>
+  <Config Name="Data" Target="/data" Default="/mnt/user/appdata/connectome/data" Mode="rw" Description="Sessions, Chronicle store, LLM call logs, IPC socket (DATA_DIR)" Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/connectome/data</Config>
+  <Config Name="Config" Target="/config" Default="/mnt/user/appdata/connectome/config" Mode="rw" Description="Holds recipe.json (and mcpl-servers.json if used). A default recipe is created if missing." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/connectome/config</Config>
+  <Config Name="Anthropic API Key" Target="ANTHROPIC_API_KEY" Default="" Mode="" Description="Anthropic API key (sk-ant-...). Required by the default recipe." Type="Variable" Display="always" Required="false" Mask="true"/>
+  <Config Name="Anthropic Auth Token" Target="ANTHROPIC_AUTH_TOKEN" Default="" Mode="" Description="Optional: Claude subscription token from 'claude setup-token', instead of an API key" Type="Variable" Display="advanced" Required="false" Mask="true"/>
+  <Config Name="Web UI Username" Target="WEBUI_USERNAME" Default="admin" Mode="" Description="Basic-auth username for the web UI" Type="Variable" Display="always" Required="true" Mask="false">admin</Config>
+  <Config Name="Web UI Password" Target="WEBUI_PASSWORD" Default="" Mode="" Description="Basic-auth password for the web UI. Required: the host refuses to bind to 0.0.0.0 without it." Type="Variable" Display="always" Required="true" Mask="true"/>
+  <Config Name="Model" Target="MODEL" Default="" Mode="" Description="Optional model override, e.g. claude-opus-4-6" Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="Agent Name" Target="AGENT_NAME" Default="agent" Mode="" Description="Agent name used by the default recipe" Type="Variable" Display="advanced" Required="false" Mask="false">agent</Config>
+  <Config Name="Agent Timezone" Target="AGENT_TIMEZONE" Default="Europe/Copenhagen" Mode="" Description="IANA zone for the agent's wall clock" Type="Variable" Display="advanced" Required="false" Mask="false">Europe/Copenhagen</Config>
+  <Config Name="Recipe Path" Target="RECIPE" Default="/config/recipe.json" Mode="" Description="Recipe file or URL to load" Type="Variable" Display="advanced" Required="false" Mask="false">/config/recipe.json</Config>
+  <Config Name="OpenAI API Key" Target="OPENAI_API_KEY" Default="" Mode="" Description="For recipes with provider openai-responses" Type="Variable" Display="advanced" Required="false" Mask="true"/>
+  <Config Name="OpenRouter API Key" Target="OPENROUTER_API_KEY" Default="" Mode="" Description="For recipes with provider openrouter" Type="Variable" Display="advanced" Required="false" Mask="true"/>
+  <Config Name="AWS Access Key ID" Target="AWS_ACCESS_KEY_ID" Default="" Mode="" Description="For the bedrock provider" Type="Variable" Display="advanced" Required="false" Mask="true"/>
+  <Config Name="AWS Secret Access Key" Target="AWS_SECRET_ACCESS_KEY" Default="" Mode="" Description="For the bedrock provider" Type="Variable" Display="advanced" Required="false" Mask="true"/>
+  <Config Name="AWS Region" Target="AWS_REGION" Default="us-west-2" Mode="" Description="For the bedrock provider" Type="Variable" Display="advanced" Required="false" Mask="false">us-west-2</Config>
+  <Config Name="PUID" Target="PUID" Default="99" Mode="" Description="User ID the app runs as (unRAID default: 99 = nobody)" Type="Variable" Display="advanced" Required="false" Mask="false">99</Config>
+  <Config Name="PGID" Target="PGID" Default="100" Mode="" Description="Group ID the app runs as (unRAID default: 100 = users)" Type="Variable" Display="advanced" Required="false" Mask="false">100</Config>
+  <Config Name="UMASK" Target="UMASK" Default="022" Mode="" Description="umask for files the app creates" Type="Variable" Display="advanced" Required="false" Mask="false">022</Config>
+</Container>
